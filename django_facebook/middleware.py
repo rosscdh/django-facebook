@@ -126,7 +126,5 @@ class FacebookMiddleware(object):
         if fb_user and request.user.is_anonymous():
             user = auth.authenticate(fb_uid=fb_user['uid'], fb_graphtoken=fb_user['access_token'])
             if user:
-                user.last_login = datetime.datetime.now()
-                user.save()
-                request.user = user
+                auth.login(request, user)
         return None
